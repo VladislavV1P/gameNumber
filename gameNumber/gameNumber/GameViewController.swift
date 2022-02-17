@@ -36,7 +36,7 @@ class GameViewController: UIViewController {
     @IBAction func refreshButtonNew(_ sender: UIButton) {
         game.newGame()
         setupScreen()
-
+ 
     }
     
     @IBAction func pressButton(_ sender: UIButton) {
@@ -51,13 +51,17 @@ class GameViewController: UIViewController {
         refreshButton.isHidden = true
         for index in game.items.indices {
             buttonCollection[index].setTitle(game.items[index].titel, for: .normal)
-            buttonCollection[index].isHidden = false
+
+            buttonCollection[index].alpha = 1
+            buttonCollection[index].isEnabled = true
         }
         nextDigit.text = game.nextItem?.titel
     }
     private func updateIU() {
         for index in game.items.indices {
-            buttonCollection[index].isHidden = game.items[index].isFound
+
+            buttonCollection[index].alpha = game.items[index].isFound ? 0 : 1
+            buttonCollection[index].isEnabled = !game.items[index].isFound
             if game.items[index].isErrors {
                 UIView.animate(withDuration: 0.3) { [weak self] in
                     self?.buttonCollection[index].backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
